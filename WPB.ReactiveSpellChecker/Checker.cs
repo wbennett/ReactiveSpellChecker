@@ -30,7 +30,7 @@ namespace WPB.ReactiveSpellChecker
         {
             var rval = new List<Result>();
             //clean up words
-            var words = wordOrSentence.Trim().Replace(",","").Replace(".","").Split(' ');
+            var words = wordOrSentence.Trim().Replace(",","").Replace(".","").Replace("?","").Replace("\"","").Replace("'","").Split(' ');
             //check and get suggestsions
             foreach (var w in words)
             {
