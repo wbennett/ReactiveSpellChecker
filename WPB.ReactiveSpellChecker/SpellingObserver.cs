@@ -12,16 +12,22 @@ namespace WPB.ReactiveSpellChecker
 
         public void OnCompleted()
         {
-            Console.WriteLine("We are done here.");
+            using (new ConsoleColor(System.ConsoleColor.DarkGreen))
+            {
+                Console.WriteLine("We are done here.");
+            }
         }
 
         public void OnError(Exception error)
         {
-            Console.Error.WriteLine();
-            Console.Error.WriteLine("=========");
-            Console.Error.WriteLine(error);
-            Console.Error.WriteLine("=========");
-            Console.Error.WriteLine();
+            using (new ConsoleColor(System.ConsoleColor.Red))
+            {
+                Console.WriteLine();
+                Console.WriteLine("=========");
+                Console.WriteLine(error);
+                Console.WriteLine("=========");
+                Console.WriteLine();
+            }
         }
 
         public void OnNext(string value)
@@ -29,10 +35,16 @@ namespace WPB.ReactiveSpellChecker
             var res = _checker.Check(value);
             foreach (var r in res.Where(x=>!x.IsCorrect))
             {
-                Console.WriteLine(string.Format("Oops! {0} is misspelled. Here are some suggestions:",r.Word));
-                foreach (var s in r.Suggestions)
+                using (new ConsoleColor(System.ConsoleColor.DarkYellow))
                 {
-                    Console.WriteLine(string.Format("\t-\t{0}",s));
+                    Console.WriteLine(string.Format("Oops! {0} is misspelled. Here are some suggestions:",r.Word));
+                }
+                using (new ConsoleColor(System.ConsoleColor.Green))
+                {
+                    foreach (var s in r.Suggestions)
+                    {
+                        Console.WriteLine(string.Format("\t-\t{0}",s));
+                    }
                 }
             }
             Console.WriteLine();
